@@ -1,0 +1,454 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Address {
+  id: ID!
+  userId: String!
+  name: String
+  country: String
+  city: String
+  address: String!
+  entrance: Int
+  floor: Int
+  apartment: Int
+  comment: String
+  isPrimary: Boolean!
+  created: DateTime!
+  updated: DateTime!
+  deleted: DateTime!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type OrderItem {
+  id: ID!
+  orderId: ID!
+  productId: ID!
+  count: Int
+  price: Int!
+  order: Order!
+  product: Product!
+}
+
+type Cards {
+  id: ID!
+  userId: ID!
+  first6: String!
+  last4: String!
+  expiry_year: String!
+  expiry_month: String!
+  card_type: String!
+  issuer_country: String!
+}
+
+type Payment {
+  id: ID!
+  userId: ID!
+  orderId: ID!
+  cardId: ID
+  paymentId: String!
+  refundId: String
+  amount: String!
+  currency: String!
+  recipientAccountId: String!
+  recipientGatewayId: String!
+  paymentMethodTitle: String
+  status: String!
+  confirmationType: String!
+  confirmationToken: String!
+  test: Boolean!
+  paid: Boolean!
+  refundable: Boolean!
+  order: Order
+  card: Cards
+}
+
+type result {
+  id: ID!
+  fileUrl: String
+  blankGuid: String
+  orderId: ID!
+  created: DateTime!
+  updated: DateTime!
+  order: Order!
+}
+
+type slotDay {
+  id: ID!
+  date: DateTime!
+  slots: slots!
+}
+
+type slots {
+  id: ID!
+  slotDayId: ID!
+  startActivity: DateTime!
+  endActivity: DateTime!
+  date: DateTime!
+  label: String!
+  capacity: Float!
+  isActive: Boolean!
+  isValid: Boolean!
+  type: String!
+  comment: String
+  orders: Order!
+  slotDay: slotDay!
+}
+
+type Order {
+  id: ID!
+  userId: ID!
+  slotId: ID
+  type: String!
+  code: String!
+  sum: Int!
+  address: String!
+  entrance: Int
+  floor: Int
+  apartment: Int
+  comment: String
+  date: String!
+  nameFirst: String!
+  nameLast: String!
+  nameMiddle: String!
+  birthday: String!
+  gender: Gender!
+  passportNumber: String!
+  phone: String!
+  email: String!
+  forChild: Boolean!
+  paid: Boolean!
+  created: DateTime!
+  updated: DateTime!
+  user: User!
+  slot: slots!
+  orderItems: [OrderItem!]
+  payment: Payment
+  nurseId: Int
+  orderLabId: String!
+  result: Boolean!
+  results: [result!]
+  laboratory: String!
+  lisId: String!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+type Passport {
+  id: ID!
+  passportNumber: String!
+  snils: String
+  oms: String
+  dms: String
+  dmcCompanyName: String
+}
+
+type User {
+  id: ID!
+  passportId: ID
+  username: String
+  birthday: String
+  gender: Gender
+  email: String
+  phoneCode: String
+  phoneIsVerified: Boolean!
+  emailIsConfirmed: Boolean!
+  avatar: String
+  phone: String
+  content: String
+  nameFirst: String
+  nameLast: String
+  nameMiddle: String
+  lastLogin: DateTime!
+  created: DateTime!
+  updated: DateTime!
+  passport: Passport
+}
+
+type Basket {
+  id: ID!
+  userId: ID!
+  productId: ID!
+  count: ID
+  created: DateTime!
+  deleted: DateTime!
+  updated: DateTime!
+  user: User!
+  product: Product!
+}
+
+type image {
+  id: ID!
+  fileId: String!
+  src: String!
+  contentType: String!
+  size: Float!
+  width: Float!
+  height: Float!
+  entityId: ID!
+  entityType: String
+  position: Float!
+  created: DateTime!
+  updated: DateTime!
+}
+
+type Label {
+  id: ID!
+  title: String!
+  description: String
+  textColor: String
+  position: Float
+  isBanner: Boolean!
+  forMainPage: Boolean!
+  hidden: Boolean!
+  image: image
+  created: DateTime!
+  updated: DateTime!
+  productsCount: Float
+  products: [Product!]
+  sublabels: [Label!]
+  parentLabels: [Label!]
+}
+
+type container {
+  id: ID!
+  labId: String!
+  name: String!
+  shortName: String
+  created: DateTime!
+  updated: DateTime!
+}
+
+type productContainer {
+  id: ID!
+  productId: Int!
+  containerId: Int!
+  samplingGroupId: String
+  biomaterialCode: String
+  maxTestsCount: String
+  created: DateTime!
+  updated: DateTime!
+}
+
+type Product {
+  id: ID!
+  title: String!
+  description: String
+  descriptionShort: String
+  preparation: String
+  contraindications: String
+  biomaterial: String
+  gemotestCode: String
+  gemotestTitle: String
+  dialabCode: String
+  dialabTitle: String
+  price: Int!
+  isPackage: Boolean!
+  deadline: Int!
+  interpretation: String
+  gemotestUrl: String
+  hidden: Boolean!
+  code: String
+  subProducts: [Product!]
+  labels: [Label!]
+  productContainers: [productContainer!]
+}
+
+type OffsetPageInfoType {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type ProductsConnectionType {
+  pageInfo: OffsetPageInfoType!
+  totalCount: Float!
+  nodes: [Product!]!
+}
+
+type StaticBlock {
+  id: ID!
+  code: String
+  title: String
+  content: String!
+  created: DateTime!
+  updated: DateTime!
+}
+
+type AuthPayload {
+  accessToken: String!
+  phone: String!
+}
+
+type Services {
+  id: ID!
+  key: String!
+  title: String!
+  value: String
+}
+
+type OrderItemInput {
+  productId: ID!
+}
+
+type BasketItemInput {
+  productId: ID!
+}
+
+type SoltsConnectionType {
+  pageInfo: OffsetPageInfoType!
+  totalCount: Float!
+  nodes: [slots!]!
+}
+
+input OrderProductInput {
+  productId: ID!
+}
+
+input BasketProductInput {
+  productId: ID!
+}
+
+type Query {
+  products(offsetPaging: OffsetPaging = {limit: 10, offset: 0}): ProductsConnectionType!
+  productsByIds(ids: [String!]!): [Product!]!
+  product(id: ID!): Product!
+  findProductByTitle(offsetPaging: OffsetPaging = {limit: 10, offset: 0}, title: String!): [Product!]!
+  findProductByDescription(offsetPaging: OffsetPaging = {limit: 10, offset: 0}, description: String!): [Product!]!
+  findProducts(offsetPaging: OffsetPaging = {limit: 10, offset: 0}, labels: [ID!] = [], search: String = ""): ProductsConnectionType!
+  myAddresses: [Address!]!
+  myProfile: User!
+  user(id: String!): User!
+  getOrderById(orderId: ID!): Order!
+  getMyOrders: [Order!]!
+  getLabelById(labelId: ID!): Label!
+  getLabels(forMainPage: Boolean = null, isBanner: Boolean = null): [Label!]!
+  getResultById(resultId: ID!): result!
+  getMyResults: [result!]!
+  getMyBasket: BasketDataInput!
+  getServiceByKey(key: String!): Services!
+  getSlotsById(slotsId: ID!): slots!
+  getSlots(days: Int = 1, date: DateTime = null, slotsOffsetPaging: OffsetPaging = {limit: 10, offset: 0}): SoltsConnectionType!
+  getSlotsByDays(days: Int = 1, date: DateTime!): [slots!]!
+  getSlotsByDate(date: DateTime!): slots!
+  staticBlocks: [StaticBlock!]!
+  staticBlock(code: String!): StaticBlock!
+}
+
+input OffsetPaging {
+  limit: Int = 10
+  offset: Int = 0
+}
+
+type BasketDataInput {
+  sum: Float!
+  total: Float!
+  nurseVisit: Float!
+  products: [Basket!]!
+}
+
+type Mutation {
+  addAddress(input: AddAddressInput!): Address!
+  editAddress(input: EditAddressInput!, addressId: ID!): Address!
+  primaryAddress: Address!
+  removeMyPrimaryAddress: Address!
+  editMyPrimaryAddress(addressId: ID!): Address!
+  removeAddress(addressId: ID!): [Address!]!
+  auth(phone: String!): Boolean!
+  verify(code: String!, phone: String!): AuthPayload!
+  editProfile(input: EditProfileInput!): User!
+  editEmail(email: String!): User!
+  sendEmailConfirmToken: Boolean!
+  resendConfirmationLink: Boolean!
+  checkEmailIsEmpty(email: String!): Boolean!
+  editOrderSlot(slotId: String!, orderId: String!): Order!
+  addOrder(input: AddOrderInput!): Order!
+  editPassport(input: PassportInput!): Passport!
+  confirmEmail(confirmationData: ConfirmEmailInput!): Boolean!
+  addProductsToBasket(products: [BasketProductInput!]!): BasketDataInput!
+  fillBasketData(input: FillBasketDataInput!): BasketDataInput!
+  removeProductFromBasket(productId: ID!): BasketDataInput!
+  emptyBasket: BasketDataInput!
+}
+
+input AddAddressInput {
+  name: String
+  country: String
+  city: String
+  address: String!
+  entrance: Int
+  floor: Int
+  apartment: Int
+  comment: String
+}
+
+input EditAddressInput {
+  name: String
+  country: String
+  city: String
+  address: String
+  entrance: Int
+  floor: Int
+  apartment: Int
+  comment: String
+}
+
+input EditProfileInput {
+  username: String
+  avatar: String
+  content: String
+  nameFirst: String
+  nameLast: String
+  nameMiddle: String
+  gender: Gender
+  birthday: DateTime
+  email: String
+}
+
+input AddOrderInput {
+  products: [OrderProductInput!]!
+  address: String!
+  slotId: ID!
+  entrance: Int
+  floor: Int
+  apartment: Int
+  comment: String
+  date: DateTime!
+  nameFirst: String!
+  nameLast: String!
+  nameMiddle: String!
+  birthday: DateTime!
+  gender: Gender!
+  passportNumber: String!
+  phone: String!
+  email: String!
+  forChild: Boolean = false
+  laboratory: Laboratories = GEMOTEST
+}
+
+enum Laboratories {
+  GEMOTEST
+  DIALAB
+}
+
+input PassportInput {
+  passportNumber: String
+}
+
+input ConfirmEmailInput {
+  token: String!
+}
+
+input FillBasketDataInput {
+  products: [BasketProductInput!]
+  address: AddAddressInput
+  profile: EditProfileInput
+  passport: PassportInput
+}
